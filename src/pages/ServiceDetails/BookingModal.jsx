@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import { axiosClient } from "../../hooks/useAxios";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
 
 const BookingModal = ({
   isOpen,
@@ -23,7 +23,8 @@ const BookingModal = ({
       userName: user.displayName,
       userEmail: user.email,
     };
-    axiosClient.post("/new-booking", bookService).then(() => {
+    console.log(bookService);
+    axiosSecure.post("/new-booking", bookService).then(() => {
       toast.success("Booking Success, please Pay Now");
       navigate("/dashboard/user/bookings");
     });

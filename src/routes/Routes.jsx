@@ -12,9 +12,11 @@ import Home from "../pages/Home/Home";
 import ServiceCoverage from "../pages/ServiceCoverage/ServiceCoverage";
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 import Services from "../pages/Services/Services";
+import MyBookings from "../User/MyBooking/MyBookings";
 import UserDashboard from "../User/User/UserDashboard";
 import PrivateRoute from "./PrivateRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
+import PaymentHistory from "../User/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -82,6 +84,22 @@ export const router = createBrowserRouter([
         element: (
           <RoleBasedRoute allowedRoles={"user"}>
             <UserDashboard />
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "user/bookings",
+        element: (
+          <RoleBasedRoute allowedRoles={"user"}>
+            <MyBookings />
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "user/payments",
+        element: (
+          <RoleBasedRoute allowedRoles={"user"}>
+            <PaymentHistory />
           </RoleBasedRoute>
         ),
       },
