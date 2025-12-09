@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/common/Loading";
 import useAuth from "../../hooks/useAuth";
+import { axiosClient } from "../../hooks/useAxios";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 
 const MyBookings = () => {
@@ -22,8 +23,12 @@ const MyBookings = () => {
   };
   if (isLoading) return <Loading />;
 
-  const handlePayment = (item) => {
-    console.log(item);
+  const handlePayment = async (item) => {
+    const { cost, bookingId, service_name, userEmail } = item || {};
+    const paymentInfo = { cost, bookingId, service_name, userEmail };
+
+    const { data } = await axiosClient.post("/checkout-session", paymentInfo);
+    window.location.assign(data.url);
   };
 
   return (
@@ -33,16 +38,6 @@ const MyBookings = () => {
       <p className="text-base-content/60 mb-8">
         Review and manage your upcoming and past decoration services.
       </p>
-
-      {/* FILTER BUTTONS */}
-      <div className="flex flex-wrap gap-4 mb-6">
-        <button className="px-4 py-2 bg-white rounded-xl border border-base-300 shadow-sm hover:bg-base-100 transition">
-          Sort by Date ⌄
-        </button>
-        <button className="px-4 py-2 bg-white rounded-xl border border-base-300 shadow-sm hover:bg-base-100 transition">
-          Filter by Status ⌄
-        </button>
-      </div>
 
       {/* TABLE CONTAINER */}
       <div className="bg-white rounded-2xl border border-base-200 shadow-sm overflow-hidden">

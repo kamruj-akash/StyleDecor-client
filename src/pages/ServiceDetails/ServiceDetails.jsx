@@ -6,11 +6,17 @@ import Loading from "../../Components/common/Loading";
 import useAuth from "../../hooks/useAuth";
 import { axiosClient } from "../../hooks/useAxios";
 import BookingModal from "./BookingModal";
+import useRole from "../../hooks/useRole";
 
 const ServiceDetails = () => {
   const [serviceDate, setServiceDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   const { id: serviceId } = useParams();
+  const { user } = useAuth();
+  const {role} = useRole()
+  const navigate = useNavigate();
+
   const { data: service, isLoading } = useQuery({
     queryKey: ["service", serviceId],
     queryFn: async () => {
@@ -18,8 +24,7 @@ const ServiceDetails = () => {
       return data;
     },
   });
-  const { user } = useAuth();
-  const navigate = useNavigate();
+
   const {
     category,
     cost,
@@ -42,7 +47,7 @@ const ServiceDetails = () => {
           <div className="w-full h-80 rounded-3xl overflow-hidden">
             <img
               src={thumbnail}
-              alt="Wedding Ceremony Decor"
+              alt={service_name}
               className="w-full h-full object-cover"
             />
           </div>
@@ -63,12 +68,22 @@ const ServiceDetails = () => {
                 </span>
 
                 <h1 className="text-3xl font-bold text-gray-900 mt-3">
-                  {service_name} |
+                  {service_name}
                 </h1>
 
                 <p className="text-purple-600 text-xl font-semibold mt-2">
                   {cost} / {unit}
                 </p>
+
+                <p className="text-gray-600 text-sm mt-1">
+                  Service Type: {service_type}
+                </p>
+
+                {duration_estimate && (
+                  <p className="text-gray-600 text-sm">
+                    Duration: {duration_estimate}
+                  </p>
+                )}
               </div>
 
               {/* Description */}
@@ -100,25 +115,24 @@ const ServiceDetails = () => {
 
               <div className="mt-6">
                 <p className="text-sm text-gray-600 mb-2">
-                  Check Team Availability
+                  Select Booking Date
                 </p>
                 <input
                   type="date"
-                  onChange={(e) => {
-                    setServiceDate(e.target.value);
-                  }}
+                  onChange={(e) => setServiceDate(e.target.value)}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
                 />
               </div>
 
               <button
                 onClick={() => {
-                  if (!serviceDate) {
-                    return toast.error("please select a booking date!");
-                  }
-                  if (!user) {
-                    return navigate("/login");
-                  }
+                  if (!serviceDate) return toast.error("Please select a date!");
+
+                  if (!user) return navigate("/login");
+
+                  if (role !== "user")
+                    return toast.error("Only normal users can book services!");
+
                   setIsOpen(true);
                 }}
                 className="btn mt-6 w-full bg-purple-500 hover:bg-purple-600 text-white py-2.5 rounded-full font-medium transition"
@@ -129,13 +143,17 @@ const ServiceDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* BOOKING MODAL */}
       <BookingModal
-        serviceDate={serviceDate}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
         serviceId={_id}
+        serviceDate={serviceDate}
         service_name={service_name}
         cost={cost}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
+        category={category}
+        service_type={service_type}
       />
     </>
   );

@@ -113,3 +113,13 @@ src/
 ├── App.jsx
 ├── main.jsx
 └── index.css
+
+
+
+steps:
+Assigned
+Planning Phase
+Materials Prepared
+On the Way to Venue
+Setup in Progress
+Completed

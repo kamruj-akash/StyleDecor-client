@@ -13,10 +13,12 @@ import ServiceCoverage from "../pages/ServiceCoverage/ServiceCoverage";
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 import Services from "../pages/Services/Services";
 import MyBookings from "../User/MyBooking/MyBookings";
+import BookingConfirmed from "../User/PaymentBack/BookingConfirmed";
+import PaymentFailed from "../User/PaymentBack/PaymentFailed";
+import PaymentHistory from "../User/PaymentHistory/PaymentHistory";
 import UserDashboard from "../User/User/UserDashboard";
 import PrivateRoute from "./PrivateRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
-import PaymentHistory from "../User/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -100,6 +102,22 @@ export const router = createBrowserRouter([
         element: (
           <RoleBasedRoute allowedRoles={"user"}>
             <PaymentHistory />
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/booking-confirmed",
+        element: (
+          <RoleBasedRoute allowedRoles={"user"}>
+            <BookingConfirmed />
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/payment-canceled",
+        element: (
+          <RoleBasedRoute allowedRoles={"user"}>
+            <PaymentFailed />
           </RoleBasedRoute>
         ),
       },
