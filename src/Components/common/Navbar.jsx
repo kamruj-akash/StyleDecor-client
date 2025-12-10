@@ -5,15 +5,25 @@ const navItems = [
   { name: "Contact", path: "/contact" },
 ];
 
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Circle, LogOut, User } from "lucide-react";
 import { Link, NavLink } from "react-router";
 import { SyncLoader } from "react-spinners";
 import useAuth from "../../hooks/useAuth";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
 
 const Navbar = () => {
   const { user, logOut, setUser, loading } = useAuth();
   const queryClient = useQueryClient();
+
+  const { data: userInfo } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure("/users/me");
+      return data;
+    },
+    enabled: !!user?.email,
+  });
 
   const handleLogout = () => {
     logOut().then(() => {
@@ -70,9 +80,7 @@ const Navbar = () => {
                   className="flex items-center gap-3 cursor-pointer"
                 >
                   <img
-                    src={
-                      user?.photoURL || "https://i.ibb.co/Y0F0FYP/default.jpg"
-                    }
+                    src={userInfo?.photoURL}
                     alt="User"
                     referrerPolicy="no-referrer"
                     className="w-10 h-10 rounded-full border-2 border-primary"

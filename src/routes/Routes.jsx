@@ -9,6 +9,7 @@ import Login from "../pages/Auth/Login";
 import Signup from "../pages/Auth/Signup";
 import NotFound from "../pages/Error/NotFound";
 import Home from "../pages/Home/Home";
+import Profile from "../pages/Profile/Profile";
 import ServiceCoverage from "../pages/ServiceCoverage/ServiceCoverage";
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 import Services from "../pages/Services/Services";
@@ -49,6 +50,9 @@ export const router = createBrowserRouter([
     ),
 
     children: [
+      // all role page
+      { path: "/dashboard/profile", Component: Profile },
+
       /** ----------------------
        *   ADMIN DASHBOARD
        * ---------------------- */

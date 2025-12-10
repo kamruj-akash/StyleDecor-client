@@ -3,7 +3,7 @@ import { axiosClient } from "../../hooks/useAxios";
 import ServiceCard from "../Services/ServiceCard";
 
 const Services = () => {
-  const { data: allServices, isLoading } = useQuery({
+  const { data: allServices } = useQuery({
     queryKey: ["services"],
     queryFn: async () => {
       const { data } = await axiosClient("/services");

@@ -3,7 +3,7 @@ import {
   LayoutDashboardIcon,
   Paintbrush,
   ServerCogIcon,
-  Settings,
+  User,
   Users,
 } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router";
@@ -28,7 +28,7 @@ const DashboardLayout = () => {
         <ul className="flex flex-col gap-2">
           <li>
             <NavLink
-              to={"/dashboard"}
+              to={"/dashboard/home"}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
                   isActive
@@ -163,7 +163,7 @@ const DashboardLayout = () => {
             )}
 
             <NavLink
-              to={"/settings"}
+              to={"/dashboard/profile"}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
                   isActive
@@ -172,8 +172,8 @@ const DashboardLayout = () => {
                 }`
               }
             >
-              <Settings size={20} />
-              Settings
+              <User size={20} />
+              Profile
             </NavLink>
           </li>
         </ul>
