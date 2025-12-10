@@ -1,13 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import Loading from "../../Components/common/Loading";
 import useAuth from "../../hooks/useAuth";
-import { axiosClient } from "../../hooks/useAxios";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
+import UpdateBookingModal from "./UpdateBookingModal";
 
 const MyBookings = () => {
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
   const { user } = useAuth();
 
-  const { data: bookings, isLoading } = useQuery({
+  const {
+    data: bookings,
+    isLoading,
+    refetch: bookingsRefetch,
+  } = useQuery({
     queryKey: ["my-booking", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure("/bookings");
@@ -26,9 +35,30 @@ const MyBookings = () => {
   const handlePayment = async (item) => {
     const { cost, bookingId, service_name, userEmail } = item || {};
     const paymentInfo = { cost, bookingId, service_name, userEmail };
-
-    const { data } = await axiosClient.post("/checkout-session", paymentInfo);
+    const { data } = await axiosSecure.post("/checkout-session", paymentInfo);
     window.location.assign(data.url);
+  };
+
+  const openUpdateModal = (booking) => {
+    setSelectedBooking(booking);
+    setUpdateModalOpen(true);
+  };
+
+  const handleCancel = (bookingId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(() => {
+      axiosSecure.patch(`/booking-cancel/${bookingId}`).then(() => {
+        toast.success("booking canceled!");
+        bookingsRefetch();
+      });
+    });
   };
 
   return (
@@ -49,6 +79,7 @@ const MyBookings = () => {
               <th className="text-left">SERVICE</th>
               <th className="text-left">EVENT DATE</th>
               <th className="text-left">TOTAL COST</th>
+              <th className="text-left">Location</th>
               <th className="text-left">STATUS</th>
               <th className="text-left">ACTION</th>
             </tr>
@@ -75,6 +106,9 @@ const MyBookings = () => {
                 {/* COST */}
                 <td className="font-medium">{item.cost}</td>
 
+                {/* location */}
+                <td className="font-medium">{item.location}</td>
+
                 {/* STATUS */}
                 <td>
                   <span
@@ -96,8 +130,26 @@ const MyBookings = () => {
                 </td>
 
                 {/* ACTION → CANCEL ONLY */}
-                <td>
-                  <button className="text-red-500 hover:underline text-sm font-medium">
+                <td className="flex gap-5 items-center py-4">
+                  <button
+                    onClick={() => openUpdateModal(item)}
+                    className={`hover:underline text-sm font-medium btn ${
+                      item.status === "canceled"
+                        ? "text-gray-400 btn-disabled"
+                        : "text-green-500 bg-green-100"
+                    }`}
+                  >
+                    Update
+                  </button>
+
+                  <button
+                    onClick={() => handleCancel(item._id)}
+                    className={` hover:underline text-sm font-medium btn ${
+                      item.status != "Payment Pending"
+                        ? "btn-disabled"
+                        : "text-red-500"
+                    }`}
+                  >
                     Cancel
                   </button>
                 </td>
@@ -106,6 +158,12 @@ const MyBookings = () => {
           </tbody>
         </table>
       </div>
+      <UpdateBookingModal
+        booking={selectedBooking}
+        isOpen={updateModalOpen}
+        setIsOpen={setUpdateModalOpen}
+        bookingsRefetch={bookingsRefetch}
+      />
     </div>
   );
 };
