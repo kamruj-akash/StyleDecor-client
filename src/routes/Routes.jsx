@@ -3,6 +3,7 @@ import Bookings from "../Admin/Pages/Bookings/Bookings";
 import Admin from "../Admin/Pages/Dashboard/Admin";
 import Decorators from "../Admin/Pages/Decorators/Decorators";
 import ServicesList from "../Admin/Pages/Services/ServicesList";
+import MyProjects from "../Decorator/Projects/MyAssignedProjects";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import About from "../pages/About/About";
@@ -141,8 +142,16 @@ export const router = createBrowserRouter([
       {
         path: "decorator",
         element: (
-          <RoleBasedRoute allowedRoles={"admin"}>
+          <RoleBasedRoute allowedRoles={"decorator"}>
             <div>Decorator Dashboard Coming...</div>
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "decorator/projects",
+        element: (
+          <RoleBasedRoute allowedRoles={"decorator"}>
+            <MyProjects />
           </RoleBasedRoute>
         ),
       },

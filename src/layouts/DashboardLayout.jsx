@@ -120,7 +120,7 @@ const DashboardLayout = () => {
             {role === "decorator" && (
               <>
                 <NavLink
-                  to={"/dashboard/user/projects"}
+                  to={"/dashboard/decorator/projects"}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
                       isActive
@@ -131,19 +131,6 @@ const DashboardLayout = () => {
                 >
                   <Paintbrush size={20} />
                   Assigned Projects
-                </NavLink>
-                <NavLink
-                  to={"/dashboard/user/today"}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
-                      isActive
-                        ? "bg-[#EFE8FF] text-[#8E6CE4] font-semibold"
-                        : "text-base-content/70 hover:bg-base-100"
-                    }`
-                  }
-                >
-                  <CalendarDays size={20} />
-                  Today's Schedule
                 </NavLink>
               </>
             )}
