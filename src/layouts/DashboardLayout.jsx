@@ -4,7 +4,6 @@ import {
   Paintbrush,
   ServerCogIcon,
   User,
-  Users,
 } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
@@ -81,19 +80,6 @@ const DashboardLayout = () => {
                 >
                   <CalendarDays size={20} />
                   Bookings
-                </NavLink>
-                <NavLink
-                  to={"/dashboard/clients"}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
-                      isActive
-                        ? "bg-[#EFE8FF] text-[#8E6CE4] font-semibold"
-                        : "text-base-content/70 hover:bg-base-100"
-                    }`
-                  }
-                >
-                  <Users size={20} />
-                  Clients
                 </NavLink>
               </>
             )}

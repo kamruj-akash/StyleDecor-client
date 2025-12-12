@@ -15,12 +15,14 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    emailLogin(email, password).then((data) => {
-      toast.success("Login Success");
-      const userEmail = { email: data.user.email };
-      navigate(location.state || "/");
-      axiosClient.patch("/user/login", userEmail);
-    });
+    emailLogin(email, password)
+      .then((data) => {
+        toast.success("Login Success");
+        const userEmail = { email: data.user.email };
+        navigate(location.state || "/");
+        axiosClient.patch("/user/login", userEmail);
+      })
+      .catch(() => toast.error("login failed"));
   };
 
   const handleGoogleLogin = () => {

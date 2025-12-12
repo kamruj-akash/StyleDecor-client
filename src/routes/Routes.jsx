@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import Bookings from "../Admin/Pages/Bookings/Bookings";
 import Admin from "../Admin/Pages/Dashboard/Admin";
 import Decorators from "../Admin/Pages/Decorators/Decorators";
 import ServicesList from "../Admin/Pages/Services/ServicesList";
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
        *   ADMIN DASHBOARD
        * ---------------------- */
       {
-        path: "admin",
+        path: "home",
         element: (
           <RoleBasedRoute allowedRoles={"admin"}>
             <Admin />
@@ -78,6 +79,14 @@ export const router = createBrowserRouter([
         element: (
           <RoleBasedRoute allowedRoles={"admin"}>
             <ServicesList />
+          </RoleBasedRoute>
+        ),
+      },
+      {
+        path: "bookings",
+        element: (
+          <RoleBasedRoute allowedRoles={"admin"}>
+            <Bookings />
           </RoleBasedRoute>
         ),
       },
