@@ -11,9 +11,12 @@ import { Link, NavLink } from "react-router";
 import { SyncLoader } from "react-spinners";
 import useAuth from "../../hooks/useAuth";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
+import useRole from "../../hooks/useRole";
+import Loading from "./Loading";
 
 const Navbar = () => {
   const { user, logOut, setUser, loading } = useAuth();
+  const { role, roleLoading } = useRole();
   const queryClient = useQueryClient();
 
   const { data: userInfo } = useQuery({
@@ -31,6 +34,8 @@ const Navbar = () => {
       setUser(null);
     });
   };
+
+  if (roleLoading) return <Loading />;
 
   return (
     <div className="w-full border-b border-gray-200">
@@ -69,7 +74,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                to={"/dashboard"}
+                to={`${
+                  role === "user"
+                    ? "/dashboard/home"
+                    : role === "admin"
+                    ? "/dashboard/admin"
+                    : role === "decorator" && "/dashboard/decorator"
+                }`}
                 className="btn cursor-pointer btn-primary"
               >
                 Dashboard

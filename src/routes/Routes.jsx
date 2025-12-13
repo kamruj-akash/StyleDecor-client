@@ -3,6 +3,7 @@ import Bookings from "../Admin/Pages/Bookings/Bookings";
 import Admin from "../Admin/Pages/Dashboard/Admin";
 import Decorators from "../Admin/Pages/Decorators/Decorators";
 import ServicesList from "../Admin/Pages/Services/ServicesList";
+import DecoratorDashboard from "../Decorator/Dashboard/DecoratorDashboard";
 import MyProjects from "../Decorator/Projects/MyAssignedProjects";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
@@ -59,7 +60,7 @@ export const router = createBrowserRouter([
        *   ADMIN DASHBOARD
        * ---------------------- */
       {
-        path: "home",
+        path: "admin",
         element: (
           <RoleBasedRoute allowedRoles={"admin"}>
             <Admin />
@@ -96,7 +97,7 @@ export const router = createBrowserRouter([
        *   USER DASHBOARD
        * ---------------------- */
       {
-        path: "user",
+        path: "home",
         element: (
           <RoleBasedRoute allowedRoles={"user"}>
             <UserDashboard />
@@ -143,12 +144,12 @@ export const router = createBrowserRouter([
         path: "decorator",
         element: (
           <RoleBasedRoute allowedRoles={"decorator"}>
-            <div>Decorator Dashboard Coming...</div>
+            <DecoratorDashboard />
           </RoleBasedRoute>
         ),
       },
       {
-        path: "decorator/projects",
+        path: "projects",
         element: (
           <RoleBasedRoute allowedRoles={"decorator"}>
             <MyProjects />

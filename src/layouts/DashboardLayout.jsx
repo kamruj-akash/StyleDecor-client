@@ -27,7 +27,13 @@ const DashboardLayout = () => {
         <ul className="flex flex-col gap-2">
           <li>
             <NavLink
-              to={"/dashboard/home"}
+              to={`${
+                role === "user"
+                  ? "/dashboard/home"
+                  : role === "admin"
+                  ? "/dashboard/admin"
+                  : role === "decorator" && "/dashboard/decorator"
+              }`}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
                   isActive
@@ -120,7 +126,7 @@ const DashboardLayout = () => {
             {role === "decorator" && (
               <>
                 <NavLink
-                  to={"/dashboard/decorator/projects"}
+                  to={"/dashboard/projects"}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${
                       isActive

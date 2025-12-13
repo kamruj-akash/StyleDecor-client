@@ -33,22 +33,6 @@ const Bookings = () => {
         </p>
       </div>
 
-      {/* FILTER BAR */}
-      <div className="bg-white rounded-xl shadow-sm border border-base-200 p-5 mb-6 flex flex-wrap gap-3 items-center">
-        <select className="select select-bordered w-40">
-          <option>Status</option>
-          <option>Payment Pending</option>
-          <option>Pending</option>
-          <option>Assigned</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-        </select>
-
-        <button className="btn bg-[#8E6CE4] hover:bg-[#7a5ad0] text-white">
-          Filter
-        </button>
-      </div>
-
       {/* BOOKINGS TABLE */}
       <div className="bg-white rounded-2xl shadow-sm border border-base-200 overflow-hidden">
         <table className="table-auto w-full">

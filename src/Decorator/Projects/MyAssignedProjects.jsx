@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, MapPin, MoreHorizontal } from "lucide-react";
+import { CalendarDays, MapPin } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Loading from "../../Components/common/Loading";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 import StatusModal from "./StatusModal";
@@ -10,7 +11,7 @@ const MyAssignedProjects = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
 
   const {
-    data: assignedProjects,
+    data: bookings = [],
     isLoading,
     refetch,
   } = useQuery({
@@ -21,11 +22,16 @@ const MyAssignedProjects = () => {
     },
   });
 
+  const assignedProjects = bookings.filter((b) => b.status !== "Completed");
+
   if (isLoading) return <Loading />;
 
   // Submit Updated Status
   const handleStatusUpdate = async (newStatus) => {
-    if (!selectedBooking) return;
+    if (!selectedBooking) {
+      return toast.error("please select a status");
+    }
+
     await axiosSecure
       .patch(`/booking/${selectedBooking._id}`, {
         status: newStatus,
@@ -35,10 +41,6 @@ const MyAssignedProjects = () => {
         refetch();
       })
       .catch(() => {});
-
-      if(newStatus === "Completed") {
-        axiosSecure.patch()
-      }
   };
 
   return (
@@ -107,10 +109,6 @@ const MyAssignedProjects = () => {
                     className="btn btn-sm bg-[#8E6CE4] text-white hover:bg-[#7c58d0] rounded-lg"
                   >
                     Update Status
-                  </button>
-
-                  <button className="btn btn-ghost btn-sm ml-2">
-                    <MoreHorizontal />
                   </button>
                 </td>
               </tr>

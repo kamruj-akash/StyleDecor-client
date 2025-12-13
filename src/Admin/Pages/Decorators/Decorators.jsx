@@ -106,12 +106,12 @@ const Decorators = () => {
                 {/* ACCOUNT STATUS */}
                 <td className="py-4 px-6">
                   <div className="flex items-center gap-2">
-                    {item.approved ? (
+                    {item.status === "available" ? (
                       <span className="text-green-600 flex items-center gap-1 text-sm">
                         <BadgeCheck size={16} /> Active
                       </span>
                     ) : (
-                      <span className="text-red-500 text-sm">Disabled</span>
+                      <span className="text-red-500 text-sm">Working</span>
                     )}
                   </div>
                 </td>
