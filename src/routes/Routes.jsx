@@ -10,6 +10,7 @@ import MainLayout from "../layouts/MainLayout";
 import About from "../pages/About/About";
 import Login from "../pages/Auth/Login";
 import Signup from "../pages/Auth/Signup";
+import Contact from "../pages/Contact/Contact";
 import NotFound from "../pages/Error/NotFound";
 import Home from "../pages/Home/Home";
 import Profile from "../pages/Profile/Profile";
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       { path: "service/:id", Component: ServiceDetails },
       { path: "about", Component: About },
       { path: "coverage", Component: ServiceCoverage },
+      { path: "contact", Component: Contact },
     ],
   },
 

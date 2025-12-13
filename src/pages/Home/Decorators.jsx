@@ -1,27 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
+import { axiosClient } from "../../hooks/useAxios";
 import DecoratorCard from "./DecoratorCard";
 
 const Decorators = () => {
-  const decorators = [
-    {
-      image: "https://cdn-icons-png.flaticon.com/512/706/706816.png",
-      name: "Olivia Chen",
-      specialty: "Modern & Minimalist",
-      rating: 4.9,
+  const { data: decorators = [] } = useQuery({
+    queryKey: ["decorators"],
+    queryFn: async () => {
+      const { data } = await axiosClient("/getDecorator");
+      return data;
     },
-    {
-      image: "https://cdn-icons-png.flaticon.com/512/706/706830.png",
-      name: "Benjamin Carter",
-      specialty: "Event & Ceremonial",
-      rating: 4.8,
-    },
-    {
-      image: "https://cdn-icons-png.flaticon.com/512/706/706807.png",
-      name: "Liam Rodriguez",
-      specialty: "Smart Home Integration",
-      rating: 5.0,
-    },
-  ];
-
+  });
+  console.log(decorators);
   return (
     <section className="max-w-7xl mx-auto px-6 mt-16">
       {/* Title */}
@@ -30,13 +19,12 @@ const Decorators = () => {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {decorators.map((item, index) => (
+        {decorators.map((item) => (
           <DecoratorCard
-            key={index}
-            image={item.image}
-            name={item.name}
-            specialty={item.specialty}
-            rating={item.rating}
+            key={item._id}
+            image={item.photoURL}
+            name={item.displayName}
+            email={item.email}
           />
         ))}
       </div>

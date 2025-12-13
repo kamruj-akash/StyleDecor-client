@@ -6,7 +6,7 @@ const Services = () => {
   const { data: allServices } = useQuery({
     queryKey: ["services"],
     queryFn: async () => {
-      const { data } = await axiosClient("/services");
+      const { data } = await axiosClient("/getService");
       return data;
     },
   });
