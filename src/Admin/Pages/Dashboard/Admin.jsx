@@ -21,8 +21,8 @@ const Admin = () => {
 
   const users = allUsers.filter((item) => item.role === "user");
   const decorator = allUsers.filter((item) => item.role === "decorator");
-  const earning = bookings.filter((item) => item.paymentStatus === "paid");
-  const totalEarn = earning?.reduce(
+  const paidBooking = bookings.filter((item) => item.paymentStatus === "paid");
+  const totalEarn = paidBooking?.reduce(
     (total, booking) => total + Number(booking.cost),
     0
   );
@@ -60,7 +60,7 @@ const Admin = () => {
             <div>
               <p className="text-base-content/60 text-sm">Total Bookings</p>
               <h2 className="text-3xl font-bold text-gray-900">
-                {bookings?.length}
+                {paidBooking?.length}
               </h2>
             </div>
             <div className="bg-purple-100 p-3 rounded-xl">
