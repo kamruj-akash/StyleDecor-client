@@ -40,7 +40,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-base-100">
-      {/* LEFT SIDE FORM */}
       <div className="flex items-center justify-center px-6 md:px-14 lg:px-20">
         <div className="w-full max-w-md">
           {/* Title */}
@@ -132,7 +131,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* RIGHT SIDE IMAGE */}
       <div className="hidden lg:block">
         <img
           src="https://cdn.pixabay.com/photo/2016/08/26/15/06/home-1622401_1280.jpg"
