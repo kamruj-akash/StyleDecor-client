@@ -26,11 +26,15 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    googleLogin().then((data) => {
-      const userEmail = { email: data.user.email };
-      toast.success("Login Success");
-      navigate(location.state || "/");
-      axiosClient.patch("/user/login", userEmail);
+    googleLogin().then((res) => {
+      const userInfo = {
+        displayName: res.user.displayName,
+        email: res.user.email,
+        photoURL: res.user.photoURL,
+      };
+      axiosClient.post("/user", userInfo).then(() => {
+        navigate("/");
+      });
     });
   };
 
