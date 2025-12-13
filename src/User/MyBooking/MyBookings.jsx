@@ -53,11 +53,13 @@ const MyBookings = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then(() => {
-      axiosSecure.patch(`/booking-cancel/${bookingId}`).then(() => {
-        toast.success("booking canceled!");
-        bookingsRefetch();
-      });
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.patch(`/booking-cancel/${bookingId}`).then(() => {
+          toast.success("booking canceled!");
+          bookingsRefetch();
+        });
+      }
     });
   };
 
